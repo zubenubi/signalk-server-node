@@ -1,0 +1,35 @@
+{
+	"vessel": {
+		"name"	: "USS Enterprise",
+		"brand"	: "United Federation of Planets",
+		"type"	: "NCC-1701",
+		"uuid"	: "urn:mrn:signalk:uuid:4e1cf22a-e038-4813-8953-e41e4f876cba",
+		
+		"dimensions": {
+			"length": 7,
+			"width": 2.5,
+			"mast": 10,
+			"depthTransducer": 0.5,
+			"keel": 1.5 
+		}
+	},
+
+	"interfaces": {
+    "rest": true,
+    "ws": true,
+    "bower": true
+  },
+  
+  "pipedProviders": [{
+    "id": "network",
+    "pipeElements": [
+      { 
+        "type": "providers/discovery",
+        "options": {
+          "autodiscover": true,
+          "hosts": [ "http://demo.signalk.org/" ]
+        }
+      }             
+    ]
+  }]
+}

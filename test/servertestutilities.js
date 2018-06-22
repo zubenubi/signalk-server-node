@@ -1,4 +1,5 @@
 const WebSocket = require('ws')
+const _ = require('lodash')
 
 // Connects to the url via ws
 // and provides Promises that are either resolved within
@@ -36,9 +37,9 @@ WsPromiser.prototype.send = function (message) {
 
 module.exports = {
   WsPromiser: WsPromiser,
-  startServerP: function startServerP (port) {
+  startServerP: function startServerP (port, settings) {
     const Server = require('../lib')
-    const server = new Server({
+    var opts = {
       config: {
         defaults: {
           vessels: {
@@ -64,7 +65,11 @@ module.exports = {
           }
         }
       }
-    })
+    }
+    if (!_.isUndefined(settings)) {
+      _.merge(opts.config.settings, settings)
+    }
+    const server = new Server(opts)
     return server.start()
   }
 }

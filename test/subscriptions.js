@@ -136,7 +136,7 @@ describe('Subscriptions', _ => {
     serverP = freeport().then(p => {
       port = p
       deltaUrl = 'http://localhost:' + port + '/signalk/v1/api/_test/delta'
-      return startServerP(p)
+      return startServerP(p, { disableSchemaMetaDeltas: true })
     })
   })
 
@@ -465,6 +465,7 @@ describe('Subscriptions', _ => {
         ])
       })
       .then(results => {
+        assert(results[0] != 'timeout', 'Got timeout')
         const delta = JSON.parse(results[0])
 
         assert(delta.updates.length === 1, 'Receives just one update')

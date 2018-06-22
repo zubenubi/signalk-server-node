@@ -101,7 +101,8 @@ describe('Security', () => {
             },
             security: {
               strategy: './tokensecurity'
-            }
+            },
+            disableSchemaMetaDeltas: true
           }
         }
       },

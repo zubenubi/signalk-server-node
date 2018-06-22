@@ -44,7 +44,7 @@ describe('Server', function () {
 
   before(async function () {
     port = await freeport()
-    server = await startServerP(port)
+    server = await startServerP(port, { disableSchemaMetaDeltas: true })
   })
 
   after(async function () {

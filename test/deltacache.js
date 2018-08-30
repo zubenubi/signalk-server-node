@@ -293,7 +293,7 @@ describe('deltacache', () => {
         var deltas = server.app.deltaCache.getCachedDeltas(null, delta => true)
         assert(deltas.length == expectedOrder.length)
         for (var i = 0; i < expectedOrder.length; i++) {
-          if (deltas[i].updates[0].values) {
+          if (!deltas[i].updates[0].meta) {
             deltas[i].updates[0].values[0].path.should.equal(
               expectedOrder[i].updates[0].values[0].path
             )
@@ -312,7 +312,11 @@ describe('deltacache', () => {
       return deltaP.then(() => {
         var fullTree = server.app.deltaCache.buildFull(null, ['sources'])
         fullTree.should.be.validSignalK
-        fullTree.sources.should.deep.equal({ deltaFromHttp: {} })
+        fullTree.sources.should.deep.equal({
+          defaults: {},
+          deltaFromHttp: {},
+          schema: {}
+        })
       })
     })
   })

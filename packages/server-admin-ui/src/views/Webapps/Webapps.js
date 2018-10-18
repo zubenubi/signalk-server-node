@@ -8,9 +8,9 @@ class Webapps extends Component {
   render () {
     return (
       <div className='row animated fadeIn'>
-        {this.props.webapps.map(webappInfo => {
+        {this.props.webapps.map((webappInfo, i) => {
           return (
-            <Col xs='12' md='12' lg='6' xl='4'>
+            <Col xs='12' md='12' lg='6' xl='4' key={i}>
             <Webapp
               key={webappInfo.name}
               header={webappInfo.name}

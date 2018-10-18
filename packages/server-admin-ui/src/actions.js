@@ -124,7 +124,7 @@ export const buildFetchAction = (endpoint, type) => dispatch =>
 
 export const fetchLoginStatus = buildFetchAction('/loginStatus', 'RECEIVE_LOGIN_STATUS')
 export const fetchPlugins = buildFetchAction('/plugins', 'RECEIVE_PLUGIN_LIST')
-export const fetchWebapps = buildFetchAction('/webapps', 'RECEIVE_WEBAPPS_LIST')
+export const fetchWebapps = buildFetchAction('/signalk/v1/webapps', 'RECEIVE_WEBAPPS_LIST')
 export const fetchApps = buildFetchAction('/appstore/available', 'RECEIVE_APPSTORE_LIST')
 export const fetchServerSpecification = buildFetchAction('/signalk', 'RECEIVE_SERVER_SPEC')
 

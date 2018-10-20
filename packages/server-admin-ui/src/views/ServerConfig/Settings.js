@@ -12,11 +12,17 @@ import {
   Input,
   Form,
   Col,
+  Row,
   Label,
   FormGroup,
   FormText,
   Table
 } from 'reactstrap'
+
+(function() {
+  window.GReact = React
+}())
+
 
 function fetchSettings () {
   fetch(`/settings`, {
@@ -87,11 +93,41 @@ class Settings extends Component {
       })
   }
 
+  loadDynamicComponent () {
+    const that = this
+    window.onComponentLoad = function() {
+      console.log('window.onComponentLoad')
+      that.setState({dirty: new Date()})
+    }.bind(that)
+    const script = document.createElement("script")
+    script.setAttribute('type','text/javascript')
+    script.setAttribute('onload','onComponentLoad()')
+    script.setAttribute('src','dynamiccomponent.js')
+    document.body.appendChild(script)
+  }
+
+  renderHello() {
+    return window.Hello && React.createElement(window.Hello)
+  }
+
   render () {
     const fieldColWidthMd = 10
     return (
       this.state.hasData && (
         <div className='animated fadeIn'>
+          <Card>
+            <CardHeader>Stats</CardHeader>
+            <CardBody>
+              <Row>
+                <Button
+                  onClick={this.loadDynamicComponent.bind(this)}
+                />
+                {this.renderHello()}
+              </Row>
+            </CardBody>
+          </Card>
+
+
           <Card>
             <CardBody>
               <Form

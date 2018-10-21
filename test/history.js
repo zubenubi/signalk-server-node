@@ -88,19 +88,26 @@ describe('History', _ => {
     msg.should.equal('timeout')
   })
 
-  it('REST time request works', async function () {
-    var result = await fetch(
-      `${url}/signalk/v1/api/vessels/self?time=2018-08-09T14:07:29.695Z`
-    )
-    result.status.should.equal(200)
-    var json = await result.json()
-    json.should.have.nested.property('performance.velocityMadeGood')
+  it('REST snapshot request works under both api and snapshot', async function () {
+    for (const mountPoint of ['api', 'snapshot']) {
+      var result = await fetch(
+        `${url}/signalk/v1/${mountPoint}/vessels/self?time=2018-08-09T14:07:29.695Z`
+      )
+      result.status.should.equal(200)
+      var json = await result.json()
+      json.should.have.nested.property('performance.velocityMadeGood')
+    }
   })
 
-  it('REST time request with no data  works', async function () {
+  it('REST snapshot request with no data returns 400', async function () {
     var result = await fetch(
-      `${url}/signalk/v1/api/vessels/self?time=2018-08-09T14:07:29.694Z`
+      `${url}/signalk/v1/snapshot/vessels/self?time=2018-08-09T00:00:00.000`
     )
-    result.status.should.equal(404)
+    result.status.should.equal(400)
+  })
+
+  it('REST snapshot request with no time parameter returns 400', async function () {
+    var result = await fetch(`${url}/signalk/v1/snapshot/vessels/self`)
+    result.status.should.equal(400)
   })
 })
